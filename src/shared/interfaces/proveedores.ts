@@ -14,3 +14,10 @@ export interface Proveedores {
     usuario_Id_Alta: number;
     usuario_Id_Mod: number;
 }
+
+export interface ProveedoresResponse {
+    TotalItemsCount: number;
+    Page: number;
+    PageSize: number | null;
+    Items: Proveedores[];
+}

@@ -18,3 +18,10 @@ export interface Articulos {
     usuario_Id_Alta: number;
     usuario_Id_Mod: number;
 }
+
+export interface ArticulosResponse {
+    TotalItemsCount: number;
+    Page: number;
+    PageSize: number | null;
+    Items: Articulos[];
+}

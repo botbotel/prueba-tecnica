@@ -1,6 +1,7 @@
 import { Button, Flex, Text } from "@chakra-ui/react"
 import { useAuth } from "../context/AuthContext"
 import { FaPowerOff } from "react-icons/fa6";
+import Navbar from "./Navbar";
 
 
 
@@ -20,6 +21,7 @@ function Header({ titulo }: {titulo:string}) {
                 gap={4}
                 align='center'
             >
+                <Navbar/>
                 <Text
                     fontSize='3xl'
                     fontWeight='bold'
