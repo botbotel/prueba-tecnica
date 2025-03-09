@@ -37,7 +37,6 @@ function DashboardView({ data }: { data: ArticulosExtResponse }) {
                 <Table.Body
                     p={5}
                     color='VerdeAzulado'
-                    cursor='pointer'
                 >
                         {data.Items.map((articulo) => (
                             <Table.Row 

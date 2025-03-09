@@ -103,6 +103,7 @@
         <Drawer.Root size='full'>
         <Drawer.Trigger asChild>
             <Text
+                cursor='pointer'
                 _hover={{ textDecorationLine:'underline' }}
             >
                 {prop.descripcion}
