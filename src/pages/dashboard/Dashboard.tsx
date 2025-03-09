@@ -89,7 +89,7 @@ function Dashboard() {
             w='100%'
             h='100vh'
         >
-            <Header titulo="Articulos" />
+            <Header titulo="ArticulosExt" />
             <DashboardView data={data} />
         </Flex>
     );

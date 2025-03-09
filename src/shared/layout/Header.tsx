@@ -2,6 +2,8 @@ import { Button, Flex, Text } from "@chakra-ui/react"
 import { useAuth } from "../context/AuthContext"
 import { FaPowerOff } from "react-icons/fa6";
 
+
+
 function Header({ titulo }: {titulo:string}) {
 
     const { logout } = useAuth()
@@ -13,13 +15,19 @@ function Header({ titulo }: {titulo:string}) {
             color='BlancoClinico'
             align='center'
             p={5}
-        >
-            <Text
-                fontSize='3xl'
-                fontWeight='bold'
+        >   
+            <Flex
+                gap={4}
+                align='center'
             >
-                {titulo}
-            </Text>
+                <Text
+                    fontSize='3xl'
+                    fontWeight='bold'
+                >
+                    {titulo}
+                </Text>
+            </Flex>
+
             <Flex
                 align='center'
                 gap={2}

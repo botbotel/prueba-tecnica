@@ -14,15 +14,18 @@
         queryFn: () => getArticulosAsociados(),
     });
 
-    const [articulosFiltrados, setArticlosFiltrados] = useState<Articulos[]>([]);
+    const [articulosFiltrados, setArticulosFiltrados] = useState<Articulos[]>([]);
 
+    const articulosRelacionados = data?.Items.filter(
+        (articulo: Articulos) => articulo.articuloExt_Id === prop.id
+    ) || [];
 
-    const handleApplyFilters = (selectedProviders: string[]) => {
-        if (data) {
-        const filtrados = data.Items.filter((articulo: Articulos) =>
-            selectedProviders.includes(articulo.proveedor_Id.toString())
-        )
-        setArticlosFiltrados(filtrados)
+    const handleFiltrosRecibidos = (proveedoresSelected: string[]) => {
+        if (articulosRelacionados) {
+        const filtrados = articulosRelacionados.filter((articulo: Articulos) =>
+            proveedoresSelected.includes(articulo.proveedor_Id.toString())
+        );
+        setArticulosFiltrados(filtrados)
         }
     };
 
@@ -35,14 +38,14 @@
         bg='BlancoClinico'
         >
         <Flex 
-        bg='VerdeAzulado' 
-        color='BlancoClinico' 
-        p={20} 
-        gap={5} 
-        direction='column' 
-        align='center' 
-        shadow='lg' 
-        rounded='lg'
+            bg='VerdeAzulado' 
+            color='BlancoClinico' 
+            p={20} 
+            gap={5} 
+            direction='column' 
+            align='center' 
+            shadow='lg' 
+            rounded='lg'
         >
             <Spinner 
             size='xl' 
@@ -52,7 +55,7 @@
             color="BlancoClinico" 
             fontSize='xl'
             >
-                Cargando artículos...
+            Cargando artículos...
             </Text>
         </Flex>
         </Flex>
@@ -67,40 +70,43 @@
         bg='BlancoClinico'
         >
         <Flex 
-        bg='VerdeAzulado' 
-        color='BlancoClinico' 
-        p={20} 
-        gap={5} 
-        direction='column' 
-        align='center' 
-        shadow='lg' 
-        rounded='lg'
+            bg='VerdeAzulado' 
+            color='BlancoClinico' 
+            p={20} 
+            gap={5} 
+            direction='column' 
+            align='center' 
+            shadow='lg' 
+            rounded='lg'
         >
             <Text 
-                fontSize='4xl'
+            fontSize='4xl'
             >
-                <MdOutlineError 
-                    color="BlancoClinico" 
-                />
+            <MdOutlineError 
+                color="BlancoClinico" 
+            />
             </Text>
             <Text 
             color="BlancoClinico" 
             fontSize='xl'
             >
-                Error al cargar artículos
+            Error al cargar artículos
             </Text>
         </Flex>
         </Flex>
     );
 
-    const articulosMostrar = articulosFiltrados.length > 0 ? articulosFiltrados : data.Items
+
+    const articulosMostrar = articulosFiltrados.length > 0 ? articulosFiltrados : articulosRelacionados
 
     return (
         <Drawer.Root size='full'>
         <Drawer.Trigger asChild>
             <Text
-                _hover={{textUnderlinePosition: 'under'}}
-            >{prop.descripcion}</Text>
+                _hover={{ textDecorationLine:'underline' }}
+            >
+                {prop.descripcion}
+            </Text>
         </Drawer.Trigger>
         <Portal>
             <Drawer.Backdrop />
@@ -113,12 +119,12 @@
                     p={5}
                 >
                     <Flex 
-                        direction='column' 
-                        w='100%' 
-                        gap={5}
+                    direction='column' 
+                    w='100%' 
+                    gap={5}
                     >
                     <Text>Artículos Asociados</Text>
-                    <ProovedorDialog onApplyFilters={handleApplyFilters} />
+                    <ProovedorDialog onApplyFilters={handleFiltrosRecibidos} />
                     </Flex>
                 </Drawer.Title>
                 </Drawer.Header>
@@ -137,23 +143,23 @@
                     </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                    {articulosMostrar.map((articulo: Articulos) => (
-                        <Table.Row key={articulo.id}>
-                        <Table.Cell textAlign='center'>{articulo.codigo}</Table.Cell>
-                        <Table.Cell textAlign='center'>{articulo.descripcion}</Table.Cell>
-                        <Table.Cell textAlign='center'>{articulo.descripcionCorta}</Table.Cell>
-                        <Table.Cell textAlign='center'>{articulo.descripcionAlternativa}</Table.Cell>
-                        <Table.Cell textAlign='center'>{articulo.articuloExt_Id}</Table.Cell>
-                        <Table.Cell textAlign='center'>{articulo.proveedor_Id}</Table.Cell>
-                        <Table.Cell textAlign='center'>{articulo.propietario_Id}</Table.Cell>
-                        <Table.Cell textAlign="center" color={articulo.act ? 'green.500' : 'Rojo'}>
-                            <Badge fontSize='md' colorPalette={articulo.act ? 'green' : 'red'}>
-                            {articulo.act ? 'Activo' : 'Inactivo'}
-                            </Badge>
-                        </Table.Cell>
-                        </Table.Row>
-                    ))}
-                    </Table.Body>
+                    {articulosMostrar
+                        .map((articulo: Articulos) => (
+                            <Table.Row key={articulo.id}>
+                                <Table.Cell textAlign='center'>{articulo.codigo}</Table.Cell>
+                                <Table.Cell textAlign='center'>{articulo.descripcion}</Table.Cell>
+                                <Table.Cell textAlign='center'>{articulo.descripcionCorta}</Table.Cell>
+                                <Table.Cell textAlign='center'>{articulo.descripcionAlternativa}</Table.Cell>
+                                <Table.Cell textAlign='center'>{articulo.articuloExt_Id}</Table.Cell>
+                                <Table.Cell textAlign='center'>{articulo.proveedor_Id}</Table.Cell>
+                                <Table.Cell textAlign='center'>{articulo.propietario_Id}</Table.Cell>
+                                <Table.Cell textAlign="center" color={articulo.act ? 'green.500' : 'Rojo'}>
+                                    <Badge fontSize='md' colorPalette={articulo.act ? 'green' : 'red'}>
+                                        {articulo.act ? 'Activo' : 'Inactivo'}
+                                    </Badge>
+                                </Table.Cell>
+                            </Table.Row>
+                        ))}    </Table.Body>
                 </Table.Root>
                 </Drawer.Body>
                 <Drawer.CloseTrigger asChild>

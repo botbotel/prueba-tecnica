@@ -8,7 +8,7 @@ import { FaFilter } from "react-icons/fa";
 import { Checkbox } from '@/components/ui/checkbox';
 
 interface ProovedorDialogProps {
-    onApplyFilters: (selectedProviders: string[]) => void
+    onApplyFilters: (proveedoresSelected: string[]) => void
 }
 
 function ProovedorDialog({ onApplyFilters }: ProovedorDialogProps) {
@@ -20,10 +20,10 @@ function ProovedorDialog({ onApplyFilters }: ProovedorDialogProps) {
 
     const { onClose } = useDisclosure()
 
-    const [selectedProviders, setSelectedProviders] = useState<string[]>([])
+    const [proveedoresSelected, setProveedoresSelected] = useState<string[]>([])
 
     const handleCheckboxChange = (proveedorId: string) => {
-        setSelectedProviders((prev) =>
+        setProveedoresSelected((prev) =>
         prev.includes(proveedorId)
             ? prev.filter((id) => id !== proveedorId) 
             : [...prev, proveedorId] 
@@ -31,7 +31,7 @@ function ProovedorDialog({ onApplyFilters }: ProovedorDialogProps) {
     };
 
     const handleApplyFilters = () => {
-        onApplyFilters(selectedProviders)
+        onApplyFilters(proveedoresSelected)
         onClose()
     };
 
@@ -85,9 +85,9 @@ function ProovedorDialog({ onApplyFilters }: ProovedorDialogProps) {
                             gap={2}
                         >
                             <Checkbox
-                                checked={selectedProviders.includes(proveedor.id.toString())}
+                                checked={proveedoresSelected.includes(proveedor.id.toString())}
                                 onChange={() => handleCheckboxChange(proveedor.id.toString())}
-                                bg='BlancoClinico'
+                                bg='transparent'
                                 color='VerdeAzulado'
                             />
                             <Flex 
